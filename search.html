@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMatch | Google API Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/String Matching/style.css">
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-brands fa-google"></i> Book<span class="highlight">Finder</span>
+            </div>
+            <p class="tagline">Powered by Google Books API</p>
+        </header>
+
+        <section class="search-container">
+            <div class="input-wrapper">
+                <input type="text" id="searchInput" placeholder="Cari judul, penulis, atau ISBN...">
+                <button onclick="searchGoogleBooks()" class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i> Cari
+                </button>
+            </div>
+            <div class="stats" id="statusMsg">Siap mencari di database Google...</div>
+        </section>
+
+        <main id="resultList" class="book-grid">
+            </main>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <script>
+        document.getElementById("searchInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                searchGoogleBooks();
+            }
+        });
+    </script>
+</body>
+</html>
