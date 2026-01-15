@@ -1,91 +1,482 @@
-const API_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+// --- 1. DATASET BUKU (Ini Database Anda) ---
+const databaseBuku = [
+    // --- 5 BUKU AWAL ANDA ---
+    {
+        title: "Laskar Pelangi",
+        author: "Andrea Hirata",
+        description: "Kisah perjuangan anak-anak Belitong mengejar mimpi.",
+        cover: "https://via.placeholder.com/128x192?text=Laskar+Pelangi",
+        link: "#"
+    },
+    {
+        title: "Bumi Manusia",
+        author: "Pramoedya Ananta Toer",
+        description: "Roman sejarah pergerakan nasional di era kolonial Belanda.",
+        cover: "https://via.placeholder.com/128x192?text=Bumi+Manusia",
+        link: "#"
+    },
+    {
+        title: "Filosofi Teras",
+        author: "Henry Manampiring",
+        description: "Penjelasan filsafat Stoisisme untuk mental yang tangguh.",
+        cover: "https://via.placeholder.com/128x192?text=Filosofi",
+        link: "#"
+    },
+    {
+        title: "Atomic Habits",
+        author: "James Clear",
+        description: "Perubahan kecil yang memberikan hasil luar biasa dalam hidup.",
+        cover: "https://via.placeholder.com/128x192?text=Atomic",
+        link: "#"
+    },
+    {
+        title: "Cantik Itu Luka",
+        author: "Eka Kurniawan",
+        description: "Novel realisme magis tentang sejarah dan hal-hal gaib.",
+        cover: "https://via.placeholder.com/128x192?text=Cantik+Luka",
+        link: "#"
+    },
+    { 
+        title: "Laut Bercerita", 
+        author: "Leila S. Chudori", 
+        description: "Kisah kelam persahabatan dan aktivis mahasiswa di era reformasi.", 
+        cover: "https://via.placeholder.com/128x192?text=Laut+Bercerita", 
+        link: "#"
+    },
+    { 
+        title: "Hujan", 
+        author: "Tere Liye", 
+        description: "Novel tentang persahabatan, cinta, dan perpisahan di masa depan.", 
+        cover: "https://via.placeholder.com/128x192?text=Hujan", 
+        link: "#" 
+    },
+    { 
+        title: "Dilan 1990", 
+        author: "Pidi Baiq", 
+        description: "Kisah romansa remaja SMA di Bandung tahun 90-an.", 
+        cover: "https://via.placeholder.com/128x192?text=Dilan+1990", 
+        link: "#" 
+    },
+    { 
+        title: "Aroma Karsa", 
+        author: "Dee Lestari", 
+        description: "Pencarian tanaman mitologis yang melibatkan indra penciuman tajam.", 
+        cover: "https://via.placeholder.com/128x192?text=Aroma+Karsa", 
+        link: "#" 
+    },
+    { 
+        title: "Gadis Kretek", 
+        author: "Ratih Kumala", 
+        description: "Sejarah industri kretek Indonesia berbalut kisah cinta.", 
+        cover: "https://via.placeholder.com/128x192?text=Gadis+Kretek", 
+        link: "#" 
+    },
+    { 
+        title: "Ronggeng Dukuh Paruk", 
+        author: "Ahmad Tohari", 
+        description: "Kisah penari ronggeng di tengah gejolak sosial desa miskin.", 
+        cover: "https://via.placeholder.com/128x192?text=Ronggeng", 
+        link: "#" 
+    },
+    { 
+        title: "Negeri 5 Menara", 
+        author: "A. Fuadi", 
+        description: "Perjuangan santri mengejar mimpi dengan mantra Man Jadda Wajada.", 
+        cover: "https://via.placeholder.com/128x192?text=Negeri+5+Menara", 
+        link: "#" 
+    },
+    { 
+        title: "Perahu Kertas", 
+        author: "Dee Lestari",
+        description: "Kisah pasang surut hubungan dua anak muda yang unik.", 
+        cover: "https://via.placeholder.com/128x192?text=Perahu+Kertas", 
+        link: "#" 
+    },
+    { 
+        title: "Supernova: Ksatria, Puteri", 
+        author: "Dee Lestari", 
+        description: "Novel fiksi ilmiah berbalut filsafat yang mengguncang sastra.", 
+        cover: "https://via.placeholder.com/128x192?text=Supernova", 
+        link: "#" 
+    },
+    { 
+        title: "Tentang Kamu", 
+        author: "Tere Liye", 
+        description: "Perjalanan menelusuri jejak kehidupan seorang wanita misterius.", 
+        cover: "https://via.placeholder.com/128x192?text=Tentang+Kamu", 
+        link: "#" 
+    },
+    { 
+        title: "Bumi", 
+        author: "Tere Liye", 
+        description: "Petualangan Raib di dunia paralel klan Bulan.", 
+        cover: "https://via.placeholder.com/128x192?text=Bumi+TL", 
+        link: "#" 
+    },
+    { 
+        title: "Pulang", 
+        author: "Leila S. Chudori", 
+        description: "Kisah eksil politik Indonesia yang ingin kembali ke tanah air.", 
+        cover: "https://via.placeholder.com/128x192?text=Pulang", 
+        link: "#" 
+    },
+    { 
+        title: "Saman", 
+        author: "Ayu Utami", 
+        description: "Novel pendobrak tabu tentang seksualitas dan agama.", 
+        cover: "https://via.placeholder.com/128x192?text=Saman", 
+        link: "#" 
+    },
+    { 
+        title: "Orang-Orang Biasa", 
+        author: "Andrea Hirata", 
+        description: "Kisah jenaka tentang rencana perampokan demi pendidikan.", 
+        cover: "https://via.placeholder.com/128x192?text=Orang+Biasa", 
+        link: "#" 
+    },
+    { 
+        title: "Sang Pemimpi", 
+        author: "Andrea Hirata", 
+        description: "Kelanjutan Laskar Pelangi, tentang mimpi sekolah ke Sorbonne.", 
+        cover: "https://via.placeholder.com/128x192?text=Sang+Pemimpi", 
+        link: "#" 
+    },
+    { 
+        title: "Psychology of Money", 
+        author: "Morgan Housel", 
+        description: "Pelajaran abadi mengenai kekayaan, ketamakan, dan kebahagiaan.", 
+        cover: "https://via.placeholder.com/128x192?text=Psychology+Money", 
+        link: "#" 
+    },
+    { 
+        title: "Rich Dad Poor Dad", 
+        author: "Robert Kiyosaki", 
+        description: "Apa yang diajarkan orang kaya pada anak mereka tentang uang.", 
+        cover: "https://via.placeholder.com/128x192?text=Rich+Dad", 
+        link: "#" 
+    },
+    { 
+        title: "Start with Why", 
+        author: "Simon Sinek", 
+        description: "Bagaimana pemimpin besar menginspirasi orang untuk bertindak.", 
+        cover: "https://via.placeholder.com/128x192?text=Start+Why", 
+        link: "#" 
+    },
+    { 
+        title: "Thinking, Fast and Slow", 
+        author: "Daniel Kahneman", 
+        description: "Sistem berpikir manusia: cepat intuitif vs lambat rasional.", 
+        cover: "https://via.placeholder.com/128x192?text=Thinking", 
+        link: "#" 
+    },
+    { 
+        title: "Grit", 
+        author: "Angela Duckworth", 
+        description: "Kekuatan passion dan kegigihan dalam meraih kesuksesan.", cover: "https://via.placeholder.com/128x192?text=Grit", link: "#" },
+    { 
+        title: "Sebuah Seni Bersikap Bodo Amat", 
+        author: "Mark Manson", 
+        description: "Pendekatan yang waras demi menjalani hidup yang baik.", 
+        cover: "https://via.placeholder.com/128x192?text=Bodo+Amat", 
+        link: "#" 
+    },
+    { 
+        title: "Berani Tidak Disukai", 
+        author: "Ichiro Kishimi", 
+        description: "Filsafat Adlerian untuk kebebasan dan kebahagiaan sejati.", 
+        cover: "https://via.placeholder.com/128x192?text=Berani", 
+        link: "#" 
+    },
+    { 
+        title: "Bicara Itu Ada Seninya", 
+        author: "Oh Su Hyang", 
+        description: "Rahasia komunikasi yang efektif dan memikat.", 
+        cover: "https://via.placeholder.com/128x192?text=Bicara+Seni", 
+        link: "#" 
+    },
+    { 
+        title: "Segala-galanya Ambyar", 
+        author: "Mark Manson", 
+        description: "Buku tentang harapan di dunia yang kacau.", 
+        cover: "https://via.placeholder.com/128x192?text=Ambyar", 
+        link: "#" 
+    },
+    { 
+        title: "Mindset", 
+        author: "Carol S. Dweck", 
+        description: "Perbedaan Fixed Mindset dan Growth Mindset.", 
+        cover: "https://via.placeholder.com/128x192?text=Mindset", 
+        link: "#" 
+    },
+    { 
+        title: "Harry Potter & Batu Bertuah", 
+        author: "J.K. Rowling", 
+        description: "Awal mula petualangan penyihir muda di Hogwarts.", 
+        cover: "https://via.placeholder.com/128x192?text=Harry+Potter", 
+        link: "#" 
+    },
+    { 
+        title: "The Alchemist", 
+        author: "Paulo Coelho", 
+        description: "Perjalanan seorang gembala mencari harta karun impiannya.", 
+        cover: "https://via.placeholder.com/128x192?text=Alchemist", 
+        link: "#" 
+    },
+    { 
+        title: "Sherlock Holmes", 
+        author: "Arthur Conan Doyle", 
+        description: "Kumpulan kasus detektif legendaris dari Baker Street.", 
+        cover: "https://via.placeholder.com/128x192?text=Sherlock", 
+        link: "#" 
+    },
 
-async function searchGoogleBooks() {
-    // 1. Ambil nilai input
+    { 
+        title: "1984", 
+        author: "George Orwell", 
+        description: "Novel distopia tentang pengawasan totaliter Big Brother.", 
+        cover: "https://via.placeholder.com/128x192?text=1984", 
+        link: "#" 
+    },
+    { 
+        title: "The Little Prince", 
+        author: "Antoine de Saint-Exupéry", 
+        description: "Kisah pangeran kecil yang penuh filosofi kehidupan.", 
+        cover: "https://via.placeholder.com/128x192?text=Little+Prince", 
+        link: "#" 
+    },
+    { 
+        title: "Norwegian Wood", 
+        author: "Haruki Murakami", 
+        description: "Kisah cinta yang melankolis dan penuh nostalgia.", 
+        cover: "https://via.placeholder.com/128x192?text=Norwegian", 
+        link: "#" 
+    },
+    { 
+        title: "Crazy Rich Asians", 
+        author: "Kevin Kwan", 
+        description: "Intrik keluarga super kaya di Singapura.", 
+        cover: "https://via.placeholder.com/128x192?text=Crazy+Rich", 
+        link: "#" 
+    },
+    { 
+        title: "Da Vinci Code", 
+        author: "Dan Brown", 
+        description: "Misteri kode rahasia yang mengguncang sejarah agama.", 
+        cover: "https://via.placeholder.com/128x192?text=Da+Vinci", 
+        link: "#" 
+    },
+    { 
+        title: "To Kill a Mockingbird", 
+        author: "Harper Lee", 
+        description: "Drama hukum tentang rasisme di Amerika Selatan.", 
+        cover: "https://via.placeholder.com/128x192?text=Mockingbird", 
+        link: "#" 
+    },
+    { 
+        title: "Lord of the Rings", 
+        author: "J.R.R. Tolkien", 
+        description: "Perjalanan epik menghancurkan cincin kekuasaan.", 
+        cover: "https://via.placeholder.com/128x192?text=LOTR", 
+        link: "#"
+    },
+    { 
+        title: "Clean Code", 
+        author: "Robert C. Martin", 
+        description: "Panduan menulis kode yang rapi dan mudah dipelihara.", 
+        cover: "https://via.placeholder.com/128x192?text=Clean+Code", 
+        link: "#" 
+    },
+    { 
+        title: "Eloquent JavaScript", 
+        author: "Marijn Haverbeke", 
+        description: "Buku wajib untuk mendalami bahasa pemrograman JavaScript.", 
+        cover: "https://via.placeholder.com/128x192?text=Eloquent+JS", 
+        link: "#" 
+    },
+    { 
+        title: "You Don't Know JS", 
+        author: "Kyle Simpson", 
+        description: "Mengupas tuntas mekanisme internal JavaScript.", 
+        cover: "https://via.placeholder.com/128x192?text=YDKJS", 
+        link: "#" 
+    },
+    { 
+        title: "Pragmatic Programmer", 
+        author: "Andrew Hunt", 
+        description: "Tips menjadi programmer yang efisien dan profesional.", 
+        cover: "https://via.placeholder.com/128x192?text=Pragmatic", 
+        link: "#" 
+    },
+    { 
+        title: "Introduction to Algorithms", 
+        author: "Thomas H. Cormen", 
+        description: "Kitab suci algoritma dan struktur data.", 
+        cover: "https://via.placeholder.com/128x192?text=Algorithms", 
+        link: "#" 
+    },
+    { 
+        title: "Design Patterns", 
+        author: "Erich Gamma", 
+        description: "Solusi umum untuk masalah desain perangkat lunak.", 
+        cover: "https://via.placeholder.com/128x192?text=Design+Patterns", 
+        link: "#" 
+    },
+    { 
+        title: "Don't Make Me Think", 
+        author: "Steve Krug", 
+        description: "Prinsip dasar desain UI/UX yang intuitif.", 
+        cover: "https://via.placeholder.com/128x192?text=UI+UX", 
+        link: "#" 
+    },
+    { 
+        title: "Sapiens", 
+        author: "Yuval Noah Harari", 
+        description: "Riwayat singkat umat manusia dari zaman batu.", 
+        cover: "https://via.placeholder.com/128x192?text=Sapiens", 
+        link: "#" 
+    },
+    { 
+        title: "Homo Deus", 
+        author: "Yuval Noah Harari", 
+        description: "Masa depan umat manusia dan teknologi.", 
+        cover: "https://via.placeholder.com/128x192?text=Homo+Deus", 
+        link: "#" 
+    },
+    { 
+        title: "Cosmos", 
+        author: "Carl Sagan", 
+        description: "Menjelajahi alam semesta dan tempat kita di dalamnya.", 
+        cover: "https://via.placeholder.com/128x192?text=Cosmos", 
+        link: "#" 
+    },
+    { 
+        title: "Madilog", 
+        author: "Tan Malaka", 
+        description: "Materialisme, Dialektika, dan Logika pemikiran Indonesia.", 
+        cover: "https://via.placeholder.com/128x192?text=Madilog", 
+        link: "#" 
+    },
+    { 
+        title: "Habibie & Ainun", 
+        author: "B.J. Habibie", 
+        description: "Kisah cinta abadi sang teknokrat dan ibu negara.", 
+        cover: "https://via.placeholder.com/128x192?text=Habibie", 
+        link: "#" 
+    },
+    { 
+        title: "Soekarno", 
+        author: "Cindy Adams", 
+        description: "Otobiografi presiden pertama Indonesia penyambung lidah rakyat.", 
+        cover: "https://via.placeholder.com/128x192?text=Soekarno", 
+        link: "#" 
+    },
+    { 
+        title: "Panggil Aku Kartini Saja", 
+        author: "Pramoedya A. Toer", 
+        description: "Biografi intelektual R.A. Kartini.", 
+        cover: "https://via.placeholder.com/128x192?text=Kartini", 
+        link: "#" 
+    },
+    { 
+        title: "Tan Malaka: Bapak Republik", 
+        author: "Harry A. Poeze", 
+        description: "Kisah hidup misterius bapak republik yang terlupakan.", 
+        cover: "https://via.placeholder.com/128x192?text=Tan+Malaka", 
+        link: "#"
+    },
+    { 
+        title: "Max Havelaar", 
+        author: "Multatuli", 
+        description: "Kritik tajam terhadap sistem tanam paksa kolonial.", 
+        cover: "https://via.placeholder.com/128x192?text=Max+Havelaar", 
+        link: "#" 
+    },
+    { 
+        title: "Salah Asuhan", 
+        author: "Abdoel Moeis", 
+        description: "Konflik budaya timur dan barat di masa kolonial.", 
+        cover: "https://via.placeholder.com/128x192?text=Salah+Asuhan", 
+        link: "#" 
+    },
+    { 
+        title: "Sitti Nurbaya", 
+        author: "Marah Rusli", 
+        description: "Kisah klasik kasih tak sampai karena adat.", 
+        cover: "https://via.placeholder.com/128x192?text=Sitti+Nurbaya", 
+        link: "#" 
+    },
+    { 
+        title: "Dunia Sophie", 
+        author: "Jostein Gaarder", 
+        description: "Novel pengantar sejarah filsafat yang ringan.", 
+        cover: "https://via.placeholder.com/128x192?text=Dunia+Sophie", 
+        link: "#" 
+    }
+];
+
+// --- 2. FUNGSI PENCARIAN LOKAL ---
+function searchLocalBooks() {
     const inputVal = document.getElementById('searchInput').value;
     const container = document.getElementById('resultList');
     const statusMsg = document.getElementById('statusMsg');
 
+    // Validasi input kosong
     if (!inputVal) {
-        alert("Silakan ketik judul buku terlebih dahulu!");
+        alert("Silakan ketik kata kunci pencarian!");
         return;
     }
 
-    // Tampilkan loading
-    statusMsg.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sedang mencari di Google...';
-    container.innerHTML = ""; 
+    // Reset tampilan
+    container.innerHTML = "";
+    statusMsg.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sedang mencari...';
 
-    try {
-        // 2. Request ke API
-        const response = await fetch(API_URL + inputVal.replace(/\s/g, "+"));
-        const data = await response.json();
+    setTimeout(() => {
+        
+        // --- LOGIKA FILTER UTAMA ---
+        const keyword = inputVal.toLowerCase();
+        const hasil = databaseBuku.filter(buku => {
+            return buku.title.toLowerCase().includes(keyword) ||
+                   buku.author.toLowerCase().includes(keyword) ||
+                   buku.description.toLowerCase().includes(keyword);
+        });
 
-        // 3. Cek hasil
-        if (data.totalItems === 0 || !data.items) {
-            statusMsg.innerText = "Tidak ditemukan buku dengan kata kunci tersebut.";
+        // Cek hasil
+        if (hasil.length === 0) {
+            statusMsg.innerText = "Buku tidak ditemukan di database kami.";
             return;
         }
 
-        statusMsg.innerText = `Ditemukan sekitar ${data.totalItems} hasil. Menampilkan 10 teratas.`;
+        statusMsg.innerText = `Ditemukan ${hasil.length} buku.`;
 
-        // 4. Render Hasil
-        data.items.forEach(item => {
-            const info = item.volumeInfo;
-            
-            // Ambil data mentah
-            let title = info.title || "Tanpa Judul";
-            let authors = info.authors ? info.authors.join(", ") : "Penulis Tidak Diketahui";
-            let description = info.description || "Tidak ada deskripsi tersedia.";
-            
-            // --- BAGIAN UTAMA: HIGHLIGHTING ---
-            // Kita ubah teks mentah menjadi HTML yang ada stabilo-nya
-            title = highlightText(title, inputVal);
-            authors = highlightText(authors, inputVal);
-            description = highlightText(description, inputVal);
-            // ----------------------------------
+        // Render hasil ke HTML
+        hasil.forEach(item => {
+            // Highlight teks
+            const titleHTML = highlightText(item.title, inputVal);
+            const authorHTML = highlightText(item.author, inputVal);
+            const descHTML = highlightText(item.description, inputVal);
 
-            // Cek gambar cover
-            let coverImg = "https://via.placeholder.com/128x192?text=No+Cover";
-            if (info.imageLinks && info.imageLinks.thumbnail) {
-                coverImg = info.imageLinks.thumbnail;
-            }
-
-            // Buat HTML Kartu
             const card = document.createElement('div');
-            card.className = "book-card";
+            card.className = "book-card"; // Pastikan ada CSS untuk class ini
+            
+            // Layout kartu disesuaikan dengan struktur CSS Anda
             card.innerHTML = `
-                <img src="${coverImg}" alt="Cover" class="book-cover">
+                <img src="${item.cover}" alt="Cover" class="book-cover">
                 <div class="book-info">
-                    <div class="book-title">${title}</div>
-                    <div class="book-author"><i class="fa-solid fa-pen-nib"></i> ${authors}</div>
-                    <div class="book-desc">${description}</div>
-                    <a href="${info.previewLink}" target="_blank" class="btn-preview">Lihat di Google Books</a>
+                    <h3 class="book-title">${titleHTML}</h3>
+                    <div class="book-author"><i class="fa-solid fa-pen-nib"></i> ${authorHTML}</div>
+                    <p class="book-desc">${descHTML}</p>
+                    <a href="${item.link}" class="btn-preview">Lihat Detail</a>
                 </div>
             `;
             container.appendChild(card);
         });
 
-    } catch (error) {
-        console.error("Error:", error);
-        statusMsg.innerText = "Terjadi kesalahan saat mengambil data.";
-    }
+    }, 300); // Delay 0.3 detik agar transisi halus
 }
 
-// --- FUNGSI PEMBANTU UNTUK STABILLO ---
+// --- 3. FUNGSI HIGHLIGHT (STABILO) ---
 function highlightText(text, keyword) {
-    // Jika teks kosong, kembalikan string kosong
-    if (!text) return "";
-    
-    // Jika keyword kosong, kembalikan teks asli
-    if (!keyword) return text;
-
-    // Buat Regular Expression:
-    // 'gi' artinya:
-    // g = global (cari semua kemunculan, bukan cuma yang pertama)
-    // i = case insensitive (huruf besar/kecil dianggap sama)
+    if (!text || !keyword) return text;
     const regex = new RegExp(`(${keyword})`, 'gi');
-
-    // Ganti teks yang cocok dengan tag <mark>
-    // $1 adalah referensi ke teks asli yang ditemukan (agar huruf besar/kecilnya tetap terjaga)
     return text.replace(regex, '<mark>$1</mark>');
 }

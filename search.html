@@ -15,17 +15,17 @@
             <div class="logo">
                 <i class="fa-brands fa-google"></i> Book<span class="highlight">Finder</span>
             </div>
-            <p class="tagline">Powered by Google Books API</p>
+            <p class="tagline">Membantu Anda Menemukan Buku Sempurna yang Anda Cari</p>
         </header>
 
         <section class="search-container">
             <div class="input-wrapper">
                 <input type="text" id="searchInput" placeholder="Cari judul, penulis, atau ISBN...">
-                <button onclick="searchGoogleBooks()" class="search-btn">
+                <button onclick="searchLocalBooks()" class="search-btn">
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
             </div>
-            <div class="stats" id="statusMsg">Siap mencari di database Google...</div>
+            <div class="stats" id="statusMsg">Siap mencari Karakteristik buku...</div>
         </section>
 
         <main id="resultList" class="book-grid">
@@ -37,7 +37,7 @@
     <script>
         document.getElementById("searchInput").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
-                searchGoogleBooks();
+                searchLocalBooks();
             }
         });
     </script>
