@@ -331,28 +331,28 @@ const databaseBuku = [
         title: "Don't Make Me Think", 
         author: "Steve Krug", 
         description: "Prinsip dasar desain UI/UX yang intuitif.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=Q-VjCgAAQBAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Sapiens: Riwayat Singkat Umat Manusia", 
         author: "Yuval Noah Harari", 
         description: "Riwayat singkat umat manusia dari zaman batu.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=AuQsDwAAQBAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Homo Deus", 
         author: "Yuval Noah Harari", 
         description: "Masa depan umat manusia dan teknologi.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=nK1iDwAAQBAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Cosmos", 
         author: "Carl Sagan", 
         description: "Menjelajahi alam semesta dan tempat kita di dalamnya.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=_-XhL6_xsVkC&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     // --- BUKU 51 - SELESAI (Updated Covers) ---
@@ -360,63 +360,63 @@ const databaseBuku = [
         title: "Madilog", 
         author: "Tan Malaka", 
         description: "Materialisme, Dialektika, dan Logika pemikiran Indonesia.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=gNpXEAAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Habibie & Ainun", 
         author: "B.J. Habibie", 
         description: "Kisah cinta abadi sang teknokrat dan ibu negara.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=h9BJygAACAAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Soekarno: Penyambung Lidah Rakyat", 
         author: "Cindy Adams", 
         description: "Otobiografi presiden pertama Indonesia penyambung lidah rakyat.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=qSXcXwAACAAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Panggil Aku Kartini Saja", 
         author: "Pramoedya A. Toer", 
         description: "Biografi intelektual R.A. Kartini.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=Z5SM0QEACAAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Tan Malaka: Bapak Republik", 
         author: "Harry A. Poeze", 
         description: "Kisah hidup misterius bapak republik yang terlupakan.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=df9VEAAAQBAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#"
     },
     { 
         title: "Max Havelaar", 
         author: "Multatuli", 
         description: "Kritik tajam terhadap sistem tanam paksa kolonial.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=gvizBAAAQBAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Salah Asuhan", 
         author: "Abdoel Moeis", 
         description: "Konflik budaya timur dan barat di masa kolonial.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=q4P2wAEACAAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Sitti Nurbaya", 
         author: "Marah Rusli", 
         description: "Kisah klasik kasih tak sampai karena adat.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=a3RPEAAAQBAJ&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     },
     { 
         title: "Dunia Sophie", 
         author: "Jostein Gaarder", 
         description: "Novel pengantar sejarah filsafat yang ringan.", 
-        cover: "https://books.google.com/books/content?id=jFFFDwAAQBAJ&printsec=copyright&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
+        cover: "https://books.google.com/books/content?id=45gF4vfALPcC&redir_esc=y&printsec=frontcover&img=1&zoom=1", 
         link: "#" 
     }
 ]; // Tutup array databaseBuku  
