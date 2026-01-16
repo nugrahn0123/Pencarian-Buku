@@ -1,32 +1,31 @@
-// --- 1. DATASET BUKU (Ini Database Anda) ---
+// --- 1. DATASET BUKU
 const databaseBuku = [
-    // --- 5 BUKU AWAL ANDA ---
     {
         title: "Laskar Pelangi",
         author: "Andrea Hirata",
         description: "Kisah perjuangan anak-anak Belitong mengejar mimpi.",
-        cover: "https://via.placeholder.com/128x192?text=Laskar+Pelangi",
+        cover: "https://upload.wikimedia.org/wikipedia/id/8/8e/Laskar_pelangi_sampul.jpg",
         link: "#"
     },
     {
         title: "Bumi Manusia",
         author: "Pramoedya Ananta Toer",
         description: "Roman sejarah pergerakan nasional di era kolonial Belanda.",
-        cover: "https://via.placeholder.com/128x192?text=Bumi+Manusia",
+        cover: "https://upload.wikimedia.org/wikipedia/id/4/44/Bumi_Manusia.jpg",
         link: "#"
     },
     {
         title: "Filosofi Teras",
         author: "Henry Manampiring",
         description: "Penjelasan filsafat Stoisisme untuk mental yang tangguh.",
-        cover: "https://via.placeholder.com/128x192?text=Filosofi",
+        cover: "https://cdn.gramedia.com/uploads/items/9786024125189_Filosofi-Teras.jpg",
         link: "#"
     },
     {
         title: "Atomic Habits",
         author: "James Clear",
         description: "Perubahan kecil yang memberikan hasil luar biasa dalam hidup.",
-        cover: "https://via.placeholder.com/128x192?text=Atomic",
+        cover: "https://upload.wikimedia.org/wikipedia/en/a/a3/Atomic_Habits_by_James_Clear.jpg",
         link: "#"
     },
     {
@@ -172,7 +171,10 @@ const databaseBuku = [
     { 
         title: "Grit", 
         author: "Angela Duckworth", 
-        description: "Kekuatan passion dan kegigihan dalam meraih kesuksesan.", cover: "https://via.placeholder.com/128x192?text=Grit", link: "#" },
+        description: "Kekuatan passion dan kegigihan dalam meraih kesuksesan.", 
+        cover: "https://via.placeholder.com/128x192?text=Grit", 
+        link: "#" 
+    },
     { 
         title: "Sebuah Seni Bersikap Bodo Amat", 
         author: "Mark Manson", 
@@ -413,26 +415,56 @@ const databaseBuku = [
         link: "#" 
     }
 ];
+// --- 2. FUNGSI BUKA DETAIL GOOGLE BOOKS ---
+async function bukaDetailGoogle(judul, penulis) {
+    // Tampilkan status loading sederhana (opsional)
+    const btnText = event.target.innerText;
+    event.target.innerText = "Memuat...";
+    
+    try {
+        // Gabungkan judul dan penulis untuk query
+        const query = `${judul} ${penulis}`;
+        // Encode agar karakter spasi/khusus aman untuk URL
+        const safeQuery = encodeURIComponent(query);
+        
+        // Fetch ke Google Books API (Public, tidak wajib API Key untuk baca dasar)
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${safeQuery}`);
+        const data = await response.json();
 
-// --- 2. FUNGSI PENCARIAN LOKAL ---
+        // Cek apakah Google menemukan buku tersebut
+        if (data.totalItems > 0) {
+            // Ambil link info dari hasil pencarian pertama (paling relevan)
+            const linkGoogle = data.items[0].volumeInfo.infoLink;
+            
+            // Buka di tab baru
+            window.open(linkGoogle, '_blank');
+        } else {
+            alert("Maaf, detail buku ini tidak ditemukan di Google Books.");
+        }
+    } catch (error) {
+        console.error("Error fetching Google Books:", error);
+        alert("Terjadi kesalahan koneksi ke Google Books.");
+    } finally {
+        // Kembalikan teks tombol
+        event.target.innerText = btnText;
+    }
+}
+
+// --- 3. FUNGSI PENCARIAN BUKU LOKAL DENGAN HIGHLIGHTING ---
 function searchLocalBooks() {
     const inputVal = document.getElementById('searchInput').value;
     const container = document.getElementById('resultList');
     const statusMsg = document.getElementById('statusMsg');
 
-    // Validasi input kosong
     if (!inputVal) {
         alert("Silakan ketik kata kunci pencarian!");
         return;
     }
 
-    // Reset tampilan
     container.innerHTML = "";
     statusMsg.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sedang mencari...';
 
     setTimeout(() => {
-        
-        // --- LOGIKA FILTER UTAMA ---
         const keyword = inputVal.toLowerCase();
         const hasil = databaseBuku.filter(buku => {
             return buku.title.toLowerCase().includes(keyword) ||
@@ -440,7 +472,6 @@ function searchLocalBooks() {
                    buku.description.toLowerCase().includes(keyword);
         });
 
-        // Cek hasil
         if (hasil.length === 0) {
             statusMsg.innerText = "Buku tidak ditemukan di database kami.";
             return;
@@ -448,33 +479,36 @@ function searchLocalBooks() {
 
         statusMsg.innerText = `Ditemukan ${hasil.length} buku.`;
 
-        // Render hasil ke HTML
         hasil.forEach(item => {
-            // Highlight teks
             const titleHTML = highlightText(item.title, inputVal);
             const authorHTML = highlightText(item.author, inputVal);
             const descHTML = highlightText(item.description, inputVal);
 
             const card = document.createElement('div');
-            card.className = "book-card"; // Pastikan ada CSS untuk class ini
-            
-            // Layout kartu disesuaikan dengan struktur CSS Anda
+            card.className = "book-card";
+            const safeTitle = item.title.replace(/'/g, "\\'");
+            const safeAuthor = item.author.replace(/'/g, "\\'");
+
             card.innerHTML = `
                 <img src="${item.cover}" alt="Cover" class="book-cover">
                 <div class="book-info">
                     <h3 class="book-title">${titleHTML}</h3>
                     <div class="book-author"><i class="fa-solid fa-pen-nib"></i> ${authorHTML}</div>
                     <p class="book-desc">${descHTML}</p>
-                    <a href="${item.link}" class="btn-preview">Lihat Detail</a>
+                    
+                    <button 
+                        class="btn-preview" 
+                        onclick="bukaDetailGoogle('${safeTitle}', '${safeAuthor}')">
+                        Lihat Detail Buku
+                    </button>
+                    
                 </div>
             `;
             container.appendChild(card);
         });
 
-    }, 300); // Delay 0.3 detik agar transisi halus
+    }, 300);
 }
-
-// --- 3. FUNGSI HIGHLIGHT (STABILO) ---
 function highlightText(text, keyword) {
     if (!text || !keyword) return text;
     const regex = new RegExp(`(${keyword})`, 'gi');
