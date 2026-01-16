@@ -21,7 +21,7 @@
         <section class="search-container">
             <div class="input-wrapper">
                 <input type="text" id="searchInput" placeholder="Cari judul, penulis, atau ISBN...">
-                <button onclick="searchLocalBooks()" class="search-btn">
+                <button onclick="searchGoogleBooks()" class="search-btn">
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
             </div>
@@ -32,12 +32,12 @@
             </main>
     </div>
 
-    <script src="./script.js"></script>
+    <script src="./scriptAPI.js"></script>
     
     <script>
         document.getElementById("searchInput").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
-                searchLocalBooks();
+                searchGoogleBooks();
             }
         });
     </script>
